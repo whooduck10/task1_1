@@ -51,19 +51,22 @@ void TCPServer::run()
                 auto controller = Router::getController(req);
                 if (controller)
                 {
+                    std::cout << "Debug 0 --------------------" << endl;
                     res = controller->handle(req);
                 }
                 else
                 {
+                    std::cout << "Debug 1 --------------------" << endl;
                     res = Response::error();
                 }
             }
         }
         catch (const std::exception &e)
         {
+            std::cout << "Debug 2 --------------------" << endl;
             res = Response::error();
         }
-        std::cout << "List TOKEN: " << TokenStore::instance();
+        std::cout << "List TOKEN: 123 " << TokenStore::instance();
         std::cout << "Response --------------------" << endl;
         std::string output = res.toCS23Format() + "\n";
         std::cout << "END --------------------" << endl;
