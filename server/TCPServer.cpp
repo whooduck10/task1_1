@@ -37,11 +37,13 @@ void TCPServer::run()
 
         //! ---------------------------------------------------------
         Response res;
+        //std::cout << "START DEBUG--------------------" << endl;
         try
         {
             Request req = RequestParser::parse(input);
             std::cout << "Request --------------------" << endl;
             std::cout << req << endl;
+           // std::cout << "Req --------------------" << endl;
             if (!AuthMiddleware::authorize(req))
             {
                 res = Response::unauthorized();
@@ -51,22 +53,22 @@ void TCPServer::run()
                 auto controller = Router::getController(req);
                 if (controller)
                 {
-                    std::cout << "Debug 0 --------------------" << endl;
+                    //std::cout << "Debug 0 --------------------" << endl;
                     res = controller->handle(req);
                 }
                 else
                 {
-                    std::cout << "Debug 1 --------------------" << endl;
+                    //std::cout << "Debug 1 --------------------" << endl;
                     res = Response::error();
                 }
             }
         }
         catch (const std::exception &e)
         {
-            std::cout << "Debug 2 --------------------" << endl;
+            //std::cout << "Debug 2 --------------------" << endl;
             res = Response::error();
         }
-        std::cout << "List TOKEN: 123 " << TokenStore::instance();
+        std::cout << "List TOKEN: \n" << TokenStore::instance();
         std::cout << "Response --------------------" << endl;
         std::string output = res.toCS23Format() + "\n";
         std::cout << "END --------------------" << endl;

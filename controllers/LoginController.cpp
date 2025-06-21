@@ -10,14 +10,21 @@ Response LoginController::handle(const Request &req)
     {
         // TODO
         //AdminController::handle(username, password);
-        TokenStore::instance().store(req.token, Role::ADMIN);
-        return {200,req.token};
+        TokenStore::instance().store(TokenGenerator::generate(), Role::ADMIN);
+        
+        return {200, req.token};
     }
     else if (username == "user" && password == "123456")
     {
         // TODO
         //UserController::handle(username, password);
-        TokenStore::instance().store(req.token, Role::USER);
+        TokenStore::instance().store(TokenGenerator::generate(), Role::USER);
+        return {200, req.token};
+    } else if (username == "guest" && password == "123456")
+    {
+        // TODO
+        //GuestController::handle(username, password);
+        TokenStore::instance().store(TokenGenerator::generate(), Role::GUEST);
         return {200, req.token};
     }
     return {403, "Fail login!!!"};

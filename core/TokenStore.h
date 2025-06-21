@@ -6,6 +6,7 @@
 enum class Role
 {
     UNKNOWN,
+    GUEST,
     USER,
     ADMIN
 };
@@ -35,6 +36,8 @@ inline std::ostream &operator<<(std::ostream &os, Role role)
         return os << "USER";
     case Role::ADMIN:
         return os << "ADMIN";
+    case Role::GUEST:
+        return os << "GUEST";
     default:
         return os << "UNKNOWN";
     }
